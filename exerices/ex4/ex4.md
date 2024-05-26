@@ -49,7 +49,7 @@ $ riscv64-unknown-elf-objdump -S hello.o
 
 
 
-## 练习4-2f-objdump -S hello.o
+## 练习4-2
 
 * 将``hello.c``编译成可调式版本的可执行程序``a.out``
 

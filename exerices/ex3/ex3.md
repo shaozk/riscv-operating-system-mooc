@@ -31,7 +31,7 @@ $ readelf -h hello.o
 # -h: --file-header 显示包含在ELF文件头中的信息
 ```
 
-	* 查看```hello.o```的Section header table
+* 查看```hello.o```的Section header table
 
 ```sh
 $ readelf -SW hello.o
