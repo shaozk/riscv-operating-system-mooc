@@ -718,8 +718,6 @@ stack_end:
 
 
 
-
-
 ## 练习5-9
 
 在 C 函数中嵌入一段汇编，实现 foo 函数中 ``c = a * a + b * b`` ，这句 C 语言的同等功能。
@@ -731,6 +729,49 @@ int foo(int a, int b)
     c = a * a + b * b;
     return c;
 }
+```
+
+```sh
+/*
+* C code
+* int foo(int a, int b)
+* {
+*     int c;
+*     c = a * a + b * b;
+*     return c;
+* }
+*/
+
+
+int foo(int a, int b)
+{
+	int c;
+
+	asm volatile (
+        "mul %[add1], %[add1], %[add1]; mul %[add2], %[add2], %[add2];add %[sum], %[add1], %[add2]"
+		:[sum]"=r"(c)
+		:[add1]"r"(a), [add2]"r"(b)
+	);
+
+	return c;
+}
+
+```
+
+```sh
+# 部分调试结果
+...
+(gdb) 
+15              j stop                  # Infinite loop to stop execution
+=> 0x80000014 <stop+0>: 6f 00 00 00     j       0x80000014 <stop>
+1: /z $sp = 0x8000004c
+2: /z $ra = 0x80000014
+3: /z $s0 = 0x00000000
+4: /z $a0 = 0x0000000d
+5: /z $a1 = 0x00000003
+6: /z $a4 = 0x00000009
+7: /z $a5 = 0x0000000d
+...
 ```
 
 
